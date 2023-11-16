@@ -1,10 +1,23 @@
-import express from 'express' ;
+import express, { Request, Response, Application } from "express";
 
-const app = express()
-const port = 3000
+// Create an instance of the Express application
+const app = express();
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+// parsers
+app.use(express.json());
+app.use(express.text());
 
-export default app ;
+//get route root URL ("/")
+app.get("/", (req: Request, res: Response) => {
+  res.send("Hello developers");
+});
+
+// post route root url('/')
+app.post("/", (req: Request, res: Response) => {
+  console.log(req.body);
+  res.json({
+    message: "data received",
+  });
+});
+
+export default app;
