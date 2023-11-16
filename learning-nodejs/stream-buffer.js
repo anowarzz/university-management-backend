@@ -16,7 +16,7 @@ server.on("request", (req, res) => {
     readableStream.on("data", (buffer) => {
       res.statusCode = 200;
       res.write(buffer);
-    
+     
     // ending streaming
     readableStream.on("end", () => {
       res.statusCode = 200;
