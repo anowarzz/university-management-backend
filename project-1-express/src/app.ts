@@ -48,10 +48,18 @@ const logger = (req: Request, res: Response, next: NextFunction) => {
 };
 
 //get route root URL ("/")
-app.get("/", logger, (req: Request, res: Response) => {
-  console.log(req.query);
-  res.send("Hello developers");
-});
+app.get(
+  "/",
+  logger,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      console.log(req.query);
+      res.send(something);
+    } catch (err) {
+      next(err);
+    }
+  }
+);
 
 //get route root URL ("/:userId")
 app.get("/:userId/:subId", (req: Request, res: Response) => {
@@ -65,6 +73,24 @@ app.post("/", logger, (req: Request, res: Response) => {
   res.json({
     message: "data received",
   });
+});
+
+// route error handler
+app.all("*", (req: Request, res: Response) => {
+  res.status(404).json({
+    success: false,
+    message: "Route not found",
+  });
+});
+
+// Global error handler
+app.use((error: any, req: Request, res: Response, next: NextFunction) => {
+  if (error) {
+    res.status(400).json({
+      success: false,
+      message: "something went wrong",
+    });
+  }
 });
 
 export default app;
