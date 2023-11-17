@@ -7,6 +7,39 @@ const app = express();
 app.use(express.json());
 app.use(express.text());
 
+// routers
+
+const userRouter = express.Router();
+const courseRouter = express.Router();
+
+app.use("/api/v1/users", userRouter);
+app.use("/api/v1/courses", courseRouter);
+
+// create user route
+userRouter.post("/create-user", (req: Request, res: Response) => {
+  const user = req.body;
+  console.log(user);
+
+  res.json({
+    success: true,
+    message: "User is created successfully",
+    data: user,
+  });
+});
+
+// create course route
+
+courseRouter.post("/create-course", (req: Request, res: Response) => {
+  const course = req.body;
+  console.log();
+
+  res.json({
+    success: true,
+    message: "Course is created successfully",
+    data: course,
+  });
+});
+
 // middleware
 const logger = (req: Request, res: Response, next: NextFunction) => {
   console.log(req.url, req.method, req.hostname);
