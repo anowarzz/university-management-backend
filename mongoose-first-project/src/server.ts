@@ -19,6 +19,4 @@ catch(error){
 
 }
 
-
-
-
+main();
