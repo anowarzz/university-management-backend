@@ -8,14 +8,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-// getting-started.js
-const mongoose = require('mongoose');
-main().catch(err => console.log(err));
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const mongoose_1 = __importDefault(require("mongoose"));
+const config_1 = __importDefault(require("./app/config"));
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
-        yield mongoose.connect(process.env.DATABASE_URL);
+        yield mongoose_1.default.connect(config_1.default.database_url);
     });
 }
-app.listen(process.env.PORT, () => {
-    console.log(`Example app listening on port ${process.env.PORT}`);
+app.listen(config_1.default.port, () => {
+    console.log(`Example app listening on port ${config_1.default.port}`);
 });
