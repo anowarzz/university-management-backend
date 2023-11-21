@@ -1,3 +1,10 @@
+//userName type
+export type UserName = {
+  firstName: string;
+  middleName: string;
+  lastName: string;
+};
+
 // Creating a type for guardian
 export type Guardian = {
   fatherName: string;
@@ -8,13 +15,6 @@ export type Guardian = {
   motherContactNo: string;
 };
 
-//userName type
-export type UserName = {
-  firstName: string;
-  middleName: string;
-  lastName: string;
-};
-
 //localGuardian type
 export type LocalGuardian = {
   name: string;
@@ -23,7 +23,7 @@ export type LocalGuardian = {
   address: string;
 };
 
-// Creating an Interface/Type for student
+// Creating an Type for student
 export type Student = {
   id: string;
   name: UserName;
