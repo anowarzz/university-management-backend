@@ -5,20 +5,15 @@ import studentValidationSchema from './student.validation';
 // Student Profile Create
 const createStudent = async (req: Request, res: Response) => {
   try {
-    // validating request data
+    // receiving and validating request data
     const { student: studentData } = req.body;
-    const { error } = studentValidationSchema.validate(studentData);
+
+    // Creating a schema validation using zod
+
+    const zodParsedData = studentValidationSchema.parse(studentData);
 
     // creating student
-    const result = await StudentServices.createStudentIntoDB(studentData);
-
-    if (error) {
-      res.status(500).json({
-        success: false,
-        message: 'Something went wrong',
-        error: error.details,
-      });
-    }
+    const result = await StudentServices.createStudentIntoDB(zodParsedData);
 
     // sending response
     res.status(200).json({

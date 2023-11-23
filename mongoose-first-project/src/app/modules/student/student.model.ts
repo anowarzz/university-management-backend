@@ -232,7 +232,7 @@ const localGuardianSchema = new Schema<LocalGuardian>({
 const studentSchema = new Schema<Student>({
   id: { type: String },
   name: userNameSchema,
-  gender: ['male', 'female'],
+  gender: ['male', 'female', 'other'],
   dateOfBirth: { type: String },
   email: { type: String, required: true },
   contactNo: { type: String, required: true },
