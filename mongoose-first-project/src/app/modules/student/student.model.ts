@@ -1,4 +1,3 @@
-
 // import { Schema, model } from 'mongoose';
 // import { Guardian, LocalGuardian, Student, UserName } from './student.interface';
 // import validator from 'validator';
@@ -170,7 +169,7 @@ import {
   TStudent,
   TUserName,
 } from './student.interface';
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcrypt';
 import config from '../../config';
 
 const userNameSchema = new Schema<TUserName>({
@@ -234,49 +233,76 @@ const localGuardianSchema = new Schema<TLocalGuardian>({
 });
 
 const studentSchema = new Schema<TStudent, StudentModel>({
-  id: { type: String, required: [true, "Id is required"], unique: true },
-  password: { type: String, required: [true, "Password is required"], unique: true, maxlength: [20, 'password can not be more than 20 characters'] },
+  id: { type: String, required: [true, 'Id is required'], unique: true },
+  password: {
+    type: String,
+    required: [true, 'Password is required'],
+    maxlength: [20, 'password can not be more than 20 characters'],
+  },
   name: userNameSchema,
-  gender: ['male', 'female', 'other'],
+  gender: {
+    type: String,
+    enum: {
+      values: ['male', 'female', 'other'],
+      message: '{VALUE} is not a valid gender',
+    },
+  },
   dateOfBirth: { type: String },
   email: { type: String, required: true },
   contactNo: { type: String, required: true },
   emergencyContactNo: { type: String, required: true },
-  bloodGroup: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'],
+  bloodGroup: {
+    type: String,
+    enum: {
+      values: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'],
+      message: '{VALUE} is not a valid blood group',
+    },
+  },
   presentAddress: { type: String, required: true },
   permanentAddress: { type: String, required: true },
   guardian: guardianSchema,
   localGuardian: localGuardianSchema,
   profileImg: { type: String },
-  isActive: ['active', 'blocked'],
+  isActive: {
+    type: String,
+    enum: {
+      values: ['active', 'blocked'],
+      message: '{VALUE} is not a valid status',
+    },
+    default: 'active',
+  },
+  isDeleted: {
+    type: Boolean,
+    default: false,
+  },
 });
 
-
-// ===> Pre save middleware/hook ===> will work  on create() or save() function //
+// Pre save middleware/hook ===> will work  on create() or save() function //
 studentSchema.pre('save', async function (next) {
+  // eslint-disable-next-line @typescript-eslint/no-this-alias
+  const studentData = this;
 
-// eslint-disable-next-line @typescript-eslint/no-this-alias
-const studentData = this ;
+  // hashing password and save into db
+  studentData.password = await bcrypt.hash(
+    studentData.password,
+    Number(config.bcrypt_salt_rounds),
+  );
 
-// hashing password and save into db
- studentData.password = await bcrypt.hash(studentData.password, Number(config.bcrypt_salt_rounds) )
+  next();
+});
 
-next();
+// Post save middleware/hook //
+studentSchema.post('save', async function (doc, next) {
+  doc.password = '';
+  next();
+});
 
-})
+// ===> Query Middlewares  ===> //
+studentSchema.pre('find', function (next) {
+  console.log(this);
 
-
-
-// ===> Post save middleware/hook ===> //
-studentSchema.post('save', async function () {
-
-  // console.log(this, 'post hook middleware, after saving the data');
-  
-})
-
-
-
-
+  next();
+});
 
 // creating a custom static method
 studentSchema.statics.isUserExists = async function (id: string) {
