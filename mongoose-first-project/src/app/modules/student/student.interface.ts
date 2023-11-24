@@ -44,9 +44,19 @@ export type TStudent = {
 };
 
 
-export type StudentMethods = {
-  isUserExists(id: string) : Promise<TStudent | null>
+
+// For creating custom static method
+export interface StudentModel extends Model<TStudent>{
+  isUserExists(id:string): Promise<TStudent | null>
 }
 
 
-export type StudentModel = Model<TStudent, Record<string, never>, StudentMethods>
+
+
+// Declaring types and returns  for custom instance 
+// export type StudentMethods = {
+//   isUserExists(id: string) : Promise<TStudent | null>
+// }
+
+// export for custom instance
+// export type StudentModel = Model<TStudent, Record<string, never>, StudentMethods>
