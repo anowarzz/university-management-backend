@@ -298,8 +298,23 @@ studentSchema.post('save', async function (doc, next) {
 });
 
 // ===> Query Middlewares  ===> //
+
+// excluding deleted document for find query
 studentSchema.pre('find', function (next) {
-  console.log(this);
+  this.find({ isDeleted: { $ne: true } });
+
+  next();
+});
+// excluding deleted document findOne query
+studentSchema.pre('findOne', function (next) {
+  this.find({ isDeleted: { $ne: true } });
+
+  next();
+});
+
+// excluding deleted student from aggregation method
+studentSchema.pre('aggregate', function (next) {
+  this.pipeline().unshift({ $match: { isDeleted: { $ne: true } } });
 
   next();
 });
