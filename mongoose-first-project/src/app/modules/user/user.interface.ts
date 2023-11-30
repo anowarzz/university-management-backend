@@ -5,5 +5,10 @@ export type TUser = {
     role: 'admin' | 'student' | 'faculty',
     status: string,
     isDeleted: boolean,
+}
 
+export type TNewUser = {
+    role: string,
+    password: string,
+    id: string,
 }
