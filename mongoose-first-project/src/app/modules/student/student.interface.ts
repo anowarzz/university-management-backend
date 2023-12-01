@@ -1,4 +1,4 @@
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 
 //userName type
 export type TUserName = {
@@ -28,8 +28,8 @@ export type TLocalGuardian = {
 // Creating an Type for student
 export type TStudent = {
   id: string;
+  user: Types.ObjectId;
   name: TUserName;
-  password: string;
   gender: 'male' | 'female' | 'other';
   dateOfBirth: string;
   email: string;
@@ -41,12 +41,12 @@ export type TStudent = {
   guardian: TGuardian;
   localGuardian: TLocalGuardian;
   profileImg?: string;
-  isActive: 'active' | 'blocked';
   isDeleted: boolean;
 };
 
 // For creating custom static method
 export interface StudentModel extends Model<TStudent> {
+  // eslint-disable-next-line no-unused-vars
   isUserExists(id: string): Promise<TStudent | null>;
 }
 
