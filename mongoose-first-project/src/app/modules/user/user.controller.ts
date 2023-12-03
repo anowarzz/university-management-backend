@@ -8,8 +8,6 @@ const createStudent = catchAsync(async (req, res) => {
 
   const { password, student: studentData } = req.body;
 
-  // Creating a schema validation using zod
-  //   const zodParsedData = studentValidationSchema.parse(studentData);
 
   // creating student
   const result = await UserServices.createStudentIntoDB(password, studentData);
