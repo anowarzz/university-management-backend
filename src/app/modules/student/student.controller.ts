@@ -3,12 +3,8 @@ import { StudentServices } from './student.service';
 import sendResponse from '../../utils/sendResponse';
 import catchAsync from '../../utils/catchAsync';
 
-
-
-
 // Get all students from database
 const getAllStudents = catchAsync(async (req, res) => {
-
   const result = await StudentServices.getAllStudentsFromDB();
 
   // sending response
@@ -20,11 +16,8 @@ const getAllStudents = catchAsync(async (req, res) => {
   });
 });
 
-
-
 // Get Single student from database
 const getSingleStudent = catchAsync(async (req, res) => {
-
   const { studentId } = req.params;
   const result = await StudentServices.getSingleStudentFromDB(studentId);
 
@@ -40,7 +33,6 @@ const getSingleStudent = catchAsync(async (req, res) => {
 // Get Single student from database
 
 const deleteStudent = catchAsync(async (req, res) => {
-
   const { studentId } = req.params;
   const result = await StudentServices.deleteStudentFromDB(studentId);
 

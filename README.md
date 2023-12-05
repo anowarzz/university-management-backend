@@ -1,1 +1,7 @@
-## Be a Mongoose Master Milestone Practice Codes
+## University Management Service (Backend Server)
+
+### Technologies
+
+* TypeScript
+* Express Js
+* Mongoose 
