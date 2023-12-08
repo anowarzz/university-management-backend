@@ -18,6 +18,31 @@ const academicDepartmentSchema = new Schema<TAcademicDepartment>(
   },
 );
 
+// Checking before saving to db if a department already exits with the same name
+academicDepartmentSchema.pre('save', async function (next) {
+  const isDepartmentExist = await AcademicDepartment.findOne({
+    name: this.name,
+  });
+
+  if (isDepartmentExist) {
+    throw new Error('This Department Already Exists');
+  }
+  next();
+});
+
+// Checking before updating a user, if the user exists or not
+academicDepartmentSchema.pre('findOneAndUpdate', async function (next) {
+  const query = this.getQuery();
+
+  const isDepartmentExist = await AcademicDepartment.findOne(query);
+
+  if (!isDepartmentExist) {
+    throw new Error('This Department Does not Exists');
+  }
+
+  next();
+});
+
 export const AcademicDepartment = model<TAcademicDepartment>(
   'AcademicDepartment',
   academicDepartmentSchema,
