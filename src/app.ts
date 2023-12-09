@@ -18,7 +18,7 @@ app.use(cors());
 app.use('/api/v1', router);
 
 // Testing API HomeRoute
-const test = (req: Request, res: Response) => {
+const test = async (req: Request, res: Response) => {
   res.status(200).json({
     success: true,
     message: 'Welcome to P-HERO University Server',
