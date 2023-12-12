@@ -8,8 +8,6 @@ import { AdminSearchableFields } from './admin.constant';
 import { TAdmin } from './admin.interface';
 import { Admin } from './admin.model';
 
-
-
 // Get all Admins from DB
 const getAllAdminsFromDB = async (query: Record<string, unknown>) => {
   const adminQuery = new QueryBuilder(Admin.find(), query)
@@ -23,13 +21,11 @@ const getAllAdminsFromDB = async (query: Record<string, unknown>) => {
   return result;
 };
 
-
 // Get Single Admin from DB
 const getSingleAdminFromDB = async (id: string) => {
   const result = await Admin.findById(id);
   return result;
 };
-
 
 // Update an Admin Into DB
 const updateAdminIntoDB = async (id: string, payload: Partial<TAdmin>) => {
@@ -45,13 +41,12 @@ const updateAdminIntoDB = async (id: string, payload: Partial<TAdmin>) => {
     }
   }
 
-  const result = await Admin.findByIdAndUpdate({ id }, modifiedUpdatedData, {
+  const result = await Admin.findByIdAndUpdate(id, modifiedUpdatedData, {
     new: true,
     runValidators: true,
   });
   return result;
 };
-
 
 // Delete an  Admin from DB
 const deleteAdminFromDB = async (id: string) => {

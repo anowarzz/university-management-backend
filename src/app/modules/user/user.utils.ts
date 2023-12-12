@@ -67,7 +67,6 @@ export const findLastAdminId = async () => {
   return lastAdmin?.id ? lastAdmin.id.substring(2) : undefined;
 };
 
-
 // Generate Admin Id
 export const generateAdminId = async () => {
   let currentId = (0).toString();

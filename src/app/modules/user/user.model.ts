@@ -52,11 +52,11 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
-//   // Post save middleware/hook //
-//   userSchema.post('save', async function (doc, next) {
-//     doc.password = '';
-//     next();
-//   });
+// Post save middleware/hook //
+userSchema.post('save', async function (doc, next) {
+  doc.password = '';
+  next();
+});
 
 // creating USER model
 export const User = model<TUser>('User', userSchema);

@@ -3,7 +3,6 @@ import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
 import { AdminServices } from './admin.service';
 
-
 // Get Admin from DB
 const getSingleAdmin = catchAsync(async (req, res) => {
   const { id } = req.params;
@@ -17,7 +16,6 @@ const getSingleAdmin = catchAsync(async (req, res) => {
   });
 });
 
-
 // Get all Admins from DB
 const getAllAdmins = catchAsync(async (req, res) => {
   const result = await AdminServices.getAllAdminsFromDB(req.query);
@@ -29,7 +27,6 @@ const getAllAdmins = catchAsync(async (req, res) => {
     data: result,
   });
 });
-
 
 // Update an Admin Into DB
 const updateAdmin = catchAsync(async (req, res) => {
@@ -45,7 +42,7 @@ const updateAdmin = catchAsync(async (req, res) => {
   });
 });
 
-// Delete an Admin from DB 
+// Delete an Admin from DB
 const deleteAdmin = catchAsync(async (req, res) => {
   const { id } = req.params;
   const result = await AdminServices.deleteAdminFromDB(id);
