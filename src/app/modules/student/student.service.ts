@@ -7,8 +7,6 @@ import { TStudent } from './student.interface';
 
 //Get all students from DB
 const getAllStudentsFromDB = async (query: Record<string, unknown>) => {
-  console.log('base query', query);
-
   // Creating a copy of the base query
   const queryObj = { ...query };
 
@@ -32,7 +30,7 @@ const getAllStudentsFromDB = async (query: Record<string, unknown>) => {
   });
 
   // Filtering
-  const excludeFields = ['searchTerm', 'sort', 'limit'];
+  const excludeFields = ['searchTerm', 'sort', 'limit', 'page', 'fields'];
 
   excludeFields.forEach((el) => delete queryObj[el]);
 
@@ -55,14 +53,33 @@ const getAllStudentsFromDB = async (query: Record<string, unknown>) => {
   }
   const sortQuery = filterQuery.sort(sort);
 
-  // Limit query
+  let page = 1;
   let limit = 1;
+  let skip = 0;
+
   if (query.limit) {
     limit = Number(query.limit);
   }
+  if (query.page) {
+    page = Number(query.page);
+    skip = (page - 1) * limit;
+  }
 
-  const limitQuery = await sortQuery.limit(limit);
-  return limitQuery;
+  // paginate query
+  const paginateQuery = sortQuery.skip(skip);
+
+  // Limit query
+  const limitQuery = paginateQuery.limit(limit);
+
+  // field filtering
+  let fields = '-__v';
+  if (query.fields) {
+    fields = (query.fields as string).split(',').join(' ');
+  }
+
+  const fieldQuery = limitQuery.select(fields);
+
+  return fieldQuery;
 };
 
 // Get Single student from database
