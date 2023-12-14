@@ -5,7 +5,7 @@ const PreRequisiteCourseValidationSchema = z.object({
   isDeleted: z.boolean().optional(),
 });
 
-// Create Course Zod Validation
+// Create Course ==> Zod Validation
 const createCourseValidationSchema = z.object({
   body: z.object({
     title: z.string(),
@@ -17,6 +17,10 @@ const createCourseValidationSchema = z.object({
   }),
 });
 
+// Update course ==> zod validation
+const updateCourseValidationSchema = createCourseValidationSchema.partial();
+
 export const CourseValidations = {
   createCourseValidationSchema,
+  updateCourseValidationSchema,
 };

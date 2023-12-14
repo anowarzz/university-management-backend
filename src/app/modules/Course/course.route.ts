@@ -18,14 +18,12 @@ router.get('/', CourseControllers.getAllCourses);
 // Get single Course
 router.get('/:id', CourseControllers.getSingleCourse);
 
-// Update One Academic Faculty
-// router.patch(
-//   '/:facultyId',
-//   validateRequest(
-//     AcademicFacultyValidations.updateAcademicFacultyValidationSchema,
-//   ),
-//   AcademicFacultyControllers.updateAcademicFaculty,
-// );
+// Update a Course
+router.patch(
+  '/:id',
+  validateRequest(CourseValidations.updateCourseValidationSchema),
+  CourseControllers.updateCourse,
+);
 
 router.delete('/:id', CourseControllers.deleteCourse);
 
