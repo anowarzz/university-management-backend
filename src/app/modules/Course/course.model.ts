@@ -50,4 +50,26 @@ const courseSchema = new Schema<TCourse>(
   },
 );
 
+// ===> Query Middlewares  ===> //
+
+// excluding deleted document for find query
+courseSchema.pre('find', function (next) {
+  this.find({ isDeleted: { $ne: true } });
+
+  next();
+});
+// excluding deleted document findOne query
+courseSchema.pre('findOne', function (next) {
+  this.find({ isDeleted: { $ne: true } });
+
+  next();
+});
+
+// excluding deleted  from aggregation method
+courseSchema.pre('aggregate', function (next) {
+  this.pipeline().unshift({ $match: { isDeleted: { $ne: true } } });
+
+  next();
+});
+
 export const Course = model<TCourse>('Course', courseSchema);

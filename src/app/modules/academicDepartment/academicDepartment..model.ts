@@ -36,7 +36,7 @@ academicDepartmentSchema.pre('save', async function (next) {
   next();
 });
 
-// Checking before updating a user, if the user exists or not
+// Checking before updating a Department, if the department exists or not
 academicDepartmentSchema.pre('findOneAndUpdate', async function (next) {
   const query = this.getQuery();
 
@@ -45,6 +45,28 @@ academicDepartmentSchema.pre('findOneAndUpdate', async function (next) {
   if (!isDepartmentExist) {
     throw new AppError(httpStatus.NOT_FOUND, 'This Department Does not Exists');
   }
+
+  next();
+});
+
+// ===> Query Middlewares  ===> //
+
+// excluding deleted document for find query
+academicDepartmentSchema.pre('find', function (next) {
+  this.find({ isDeleted: { $ne: true } });
+
+  next();
+});
+// excluding deleted document findOne query
+academicDepartmentSchema.pre('findOne', function (next) {
+  this.find({ isDeleted: { $ne: true } });
+
+  next();
+});
+
+// excluding deleted student from aggregation method
+academicDepartmentSchema.pre('aggregate', function (next) {
+  this.pipeline().unshift({ $match: { isDeleted: { $ne: true } } });
 
   next();
 });

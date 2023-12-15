@@ -50,6 +50,28 @@ academicSemesterSchema.pre('save', async function (next) {
   next();
 });
 
+// ===> Query Middlewares  ===> //
+
+// excluding deleted document for find query
+academicSemesterSchema.pre('find', function (next) {
+  this.find({ isDeleted: { $ne: true } });
+
+  next();
+});
+// excluding deleted document findOne query
+academicSemesterSchema.pre('findOne', function (next) {
+  this.find({ isDeleted: { $ne: true } });
+
+  next();
+});
+
+// excluding deleted document from aggregation method
+academicSemesterSchema.pre('aggregate', function (next) {
+  this.pipeline().unshift({ $match: { isDeleted: { $ne: true } } });
+
+  next();
+});
+
 export const AcademicSemester = model<TAcademicSemester>(
   'AcademicSemester',
   academicSemesterSchema,
