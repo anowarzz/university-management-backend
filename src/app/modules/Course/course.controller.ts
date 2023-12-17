@@ -59,7 +59,10 @@ const assignFacultiesWithCourse = catchAsync(async (req, res) => {
   const { courseId } = req.params;
   const { faculties } = req.body;
 
-  const result = await CourseServices.updateCourseIntoDB(courseId, faculties);
+  const result = await CourseServices.assignFacultiesWithCourseIntoDB(
+    courseId,
+    faculties,
+  );
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
