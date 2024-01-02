@@ -10,34 +10,60 @@ const createSemesterRegistration = catchAsync(async (req, res) => {
       req.body,
     );
 
-  // sending response
+
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'semester registered successfully',
+    message: 'Semester Registered Successfully',
     data: result,
   });
 });
 
 
+
 // Get all semesters
-const getAllSemesterRegistrations = catchAsync(async(req, res) => {
-  const result = await SemesterRegistrationService.getAllSemesterRegistrationsFromDB(req.query) ;
+const getAllSemesterRegistrations = catchAsync(async (req, res) => {
+  const result =
+    await SemesterRegistrationService.getAllSemesterRegistrationsFromDB(
+      req.query,
+    );
 
-    // sending response
-    sendResponse(res, {
-      statusCode: httpStatus.OK,
-      success: true,
-      message: 'Semester Registration Retrieved Successfully',
-      data: result,
-    });
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Semester Registrations are Retrieved Successfully',
+    data: result,
+  });
+});
+
+// Get single semester
+const getSingleSemesterRegistration = catchAsync(async (req, res) => {
+  const { id } = req.params;
+
+  const result =
+    await SemesterRegistrationService.getSingleSemesterRegistrationsFromDB(id);
+
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Semester Registration is retrieved Successfully',
+    data: result,
+  });
+});
+
+
+
+// update a semester
+const updateSemesterRegistration = catchAsync(async(req, res) => {
+  
 })
-
-
-
 
 
 export const SemesterRegistrationController = {
   createSemesterRegistration,
-  getAllSemesterRegistrations
+  getAllSemesterRegistrations,
+  getSingleSemesterRegistration,
+  updateSemesterRegistration
 };
