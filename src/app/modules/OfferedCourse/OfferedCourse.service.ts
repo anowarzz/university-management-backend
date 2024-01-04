@@ -6,6 +6,6 @@ const createOfferedCourseIntoDB = async (payload: TOfferedCourse) => {
   return result;
 };
 
-export const OfferedCourseService = {
+export const OfferedCourseServices = {
   createOfferedCourseIntoDB,
 };

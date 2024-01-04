@@ -13,7 +13,7 @@ async function main() {
 
     server = app.listen(config.port, () => {
       console.log(
-        chalk.bold.bgMagentaBright.white(
+        chalk.bold.bgMagentaBright.whiteBright(
           `PH University Development Server Running On Port ${config.port}`,
         ),
       );
