@@ -138,3 +138,7 @@ export const SemesterRegistrationService = {
   getSingleSemesterRegistrationsFromDB,
   updateSemesterRegistrationIntoDB,
 };
+
+
+
+// checking if its all
