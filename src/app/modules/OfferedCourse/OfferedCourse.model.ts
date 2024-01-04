@@ -1,4 +1,3 @@
-
 import { TOfferedCourse } from './OfferedCourse.interface';
 import { Days } from './OfferedCourse.constant';
 import { Schema, model } from 'mongoose';

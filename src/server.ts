@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import config from './app/config';
 import app from './app';
 import { Server } from 'http';
+import chalk from 'chalk';
 
 let server: Server;
 
@@ -12,7 +13,9 @@ async function main() {
 
     server = app.listen(config.port, () => {
       console.log(
-        `PH University Development Server Running On Port ${config.port}`,
+        chalk.bold.bgMagentaBright.white(
+          `PH University Development Server Running On Port ${config.port}`,
+        ),
       );
     });
   } catch (error) {
